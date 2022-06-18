@@ -31,9 +31,11 @@ router.post("/register", async (req, res) => {
 //login
 router.post("/login", async (req, res) => {
     try {
+        //search matched user email if available
         const user = await User.findOne({email: req.body.email})
         !user && res.status(404).json("user not found")
 
+        //search matched password on database
         const validPassword = await bcrypt.compare(req.body.password, user.password)
         !validPassword && res.status(400).json("wrong password")
 
