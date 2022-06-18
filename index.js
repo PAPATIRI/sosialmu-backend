@@ -5,24 +5,30 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
 //use router
-const userRoute = require('./routes/users')
-const authRoute = require('./routes/auth')
+const userRoute = require("./routes/users");
+const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
-dotenv.config()
+dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("connected to mongo db")).catch(error => console.log(error))
-
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("connected to mongo db"))
+  .catch((error) => console.log(error));
 
 //middleware
-app.use(express.json())
-app.use(helmet())
-app.use(morgan("common"))
+app.use(express.json());
+app.use(helmet());
+app.use(morgan("common"));
 
 //routes
-app.use("/api/users", userRoute)
-app.use("/api/auth", authRoute)
-
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/posts", postRoute);
 
 app.listen(8800, () => {
-    console.log("Backend server is running!");
+  console.log("Backend server is running!");
 });
